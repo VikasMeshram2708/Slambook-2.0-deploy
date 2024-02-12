@@ -1,5 +1,5 @@
+/* eslint-disable global-require */
 import type { Config } from 'tailwindcss';
-import daisyui from 'daisyui';
 
 const config: Config = {
   content: [
@@ -10,18 +10,22 @@ const config: Config = {
   theme: {
     fontFamily: {
       Poppins: ['Poppins', 'sans-serif'],
+      Dancing: ['Dancing Script', 'cursive'],
     },
   },
   daisyui: {
     themes: [
+      'light',
+      'dark',
+      'cupcake',
+      'nord',
       {
         mytheme: {
-          'base-100': '#1a1c26',
+          primary: '#404764',
         },
       },
     ],
   },
-  // @ts-ignore
-  plugins: [daisyui],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
 };
 export default config;

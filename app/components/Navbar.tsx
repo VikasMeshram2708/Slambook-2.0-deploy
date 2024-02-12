@@ -10,16 +10,16 @@ export default function Navbar() {
     setLoggedIn((prev) => !prev);
   };
   return (
-    <div className="navbar bg-base-100 px-3">
+    <div className="navbar px-3 bg-base-200">
       <div className="flex-1">
-        <Link href="/" className="font-[500] tracking-wider text-[1.5rem]">
+        <Link href="/" className="font-[700] text-[2rem] font-Dancing">
           SlamBook
         </Link>
       </div>
-      <div className="flex-none gap-2">
-        <ul className="flex text-[.95rem] items-center gap-3">
+      <div className="flex-none gap-5">
+        <ul className="flex text-[1.05rem] items-center gap-3">
           <li>
-            <Link href="/ambitions">Ambitions</Link>
+            <Link href="/pages/explore">Blog</Link>
           </li>
           <li>
             <Link href="/about">About</Link>
@@ -77,7 +77,7 @@ export default function Navbar() {
             <button
               onClick={handleLogin}
               type="button"
-              className="bgRed px-4 rounded-md py-2.5 text-white font-[700] text-[1.2rem]"
+              className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
             >
               Sign In
             </button>
