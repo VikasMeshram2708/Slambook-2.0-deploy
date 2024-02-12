@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import daisyui from 'daisyui';
 
 const config: Config = {
   content: [
@@ -11,6 +12,16 @@ const config: Config = {
       Poppins: ['Poppins', 'sans-serif'],
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          'base-100': '#1a1c26',
+        },
+      },
+    ],
+  },
+  // @ts-ignore
+  plugins: [daisyui],
 };
 export default config;

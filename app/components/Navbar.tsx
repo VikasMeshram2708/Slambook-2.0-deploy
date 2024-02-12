@@ -1,0 +1,89 @@
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState } from 'react';
+
+export default function Navbar() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const handleLogin = () => {
+    setLoggedIn((prev) => !prev);
+  };
+  return (
+    <div className="navbar bg-base-100 px-3">
+      <div className="flex-1">
+        <Link href="/" className="font-[500] tracking-wider text-[1.5rem]">
+          SlamBook
+        </Link>
+      </div>
+      <div className="flex-none gap-2">
+        <ul className="flex text-[.95rem] items-center gap-3">
+          <li>
+            <Link href="/ambitions">Ambitions</Link>
+          </li>
+          <li>
+            <Link href="/about">About</Link>
+          </li>
+          <li>
+            <Link href="/contact">Contact</Link>
+          </li>
+        </ul>
+        {loggedIn ? (
+          <>
+            <div className="form-control">
+              <input
+                type="text"
+                placeholder="Search"
+                className="input input-bordered w-24 md:w-auto"
+              />
+            </div>
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <Image
+                    width={500}
+                    height={500}
+                    className="rounded-full"
+                    alt="Tailwind CSS Navbar component"
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link href="/profile" className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/settings">Settings</Link>
+                </li>
+                <li>
+                  <button type="button">Logout</button>
+                </li>
+              </ul>
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center gap-5">
+            <button
+              onClick={handleLogin}
+              type="button"
+              className="bgRed px-4 rounded-md py-2.5 text-white font-[700] text-[1.2rem]"
+            >
+              Sign In
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

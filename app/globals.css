@@ -4,7 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: #1a1c26;
+
+.b {
+  border: 2px solid red;
+}
+
+.bgRed {
+  background-color: #d4163c;
 }
