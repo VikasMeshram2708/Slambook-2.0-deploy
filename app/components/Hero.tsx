@@ -5,8 +5,11 @@ import React from 'react';
 
 export default function Hero() {
   const router = useRouter();
-  const handleRedirect = () => {
-    router.push('/pages/explore');
+  const handleRedirect = (id:number) => {
+    if (id === 1) {
+      return router.push('/pages/explore');
+    }
+    return router.push('/pages/slams');
   };
   return (
     <div className="items-center font-Poppins">
@@ -23,10 +26,18 @@ export default function Hero() {
             possibilities and plan your journey towards a brighter future.
           </p>
           <div className="flex gap-2 justify-center">
-            <button onClick={handleRedirect} type="button" className="btn btn-primary">
+            <button
+              onClick={() => handleRedirect(1)}
+              type="button"
+              className="btn btn-primary"
+            >
               Explore More
             </button>
-            <button type="button" className="btn btn-accent btn-outline">
+            <button
+              onClick={() => handleRedirect(2)}
+              type="button"
+              className="btn btn-accent btn-outline"
+            >
               Get Started
             </button>
           </div>
