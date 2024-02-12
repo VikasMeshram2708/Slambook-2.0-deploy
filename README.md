@@ -10,10 +10,14 @@
 
 * npm run dev
 
-
 ### Features
 
 * 0Auth
 
 * Drap & Drop
 
+### Why This Project is Best
+
+* Because it follows best practices using TypeScript which is a facilitate us with the type safety, and the best naming convention , Camel Casing on file names.
+
+* 0Auth, Testing of Components, Top linting rules, Docker for containerization. 
