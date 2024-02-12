@@ -22,10 +22,10 @@ export default function Navbar() {
             <Link href="/pages/explore">Blog</Link>
           </li>
           <li>
-            <Link href="/about">About</Link>
+            <Link href="/pages/about">About</Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link>
+            <Link href="/pages/contact">Contact</Link>
           </li>
         </ul>
         {loggedIn ? (
