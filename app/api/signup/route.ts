@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import * as z from 'zod';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import connectToDb from '@/lib/ConnectToDb';
 
 const prisma = new PrismaClient();
 
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
     const userInput: UserType = UserSchema.parse(await req.json());
     const { name, email, password } = userInput;
 
+    connectToDb();
     const userExists = await prisma.user.findUnique({
       where: { email },
     });
