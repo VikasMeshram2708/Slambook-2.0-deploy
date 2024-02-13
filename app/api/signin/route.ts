@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
-/* eslint-disable import/prefer-default-export */
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import * as z from 'zod';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import connectToDb from '@/lib/ConnectToDb';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +13,7 @@ const UserSchema = z.object({
   password: z.string().min(6).max(100),
 });
 
-type UserType = z.infer<typeof UserSchema>;
+export type UserType = z.infer<typeof UserSchema>;
 
 export async function POST(req: NextRequest) {
   try {
@@ -46,8 +45,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // JWT Token Generation
+    const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
+      expiresIn: '1h',
+    });
     return NextResponse.json(
-      { success: true, message: 'User logged in successfully.' },
+      { success: true, message: 'User logged in successfully.', token },
       { status: 200 },
     );
   } catch (error) {

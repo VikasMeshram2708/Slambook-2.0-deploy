@@ -1,14 +1,17 @@
 'use client';
 
-import Image from 'next/image';
+import { signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Navbar() {
+export default function Navbar({ data }: any) {
   const [loggedIn, setLoggedIn] = useState(false);
-  const handleLogin = () => {
-    setLoggedIn((prev) => !prev);
-  };
+  useEffect(() => {
+    if (data !== null) {
+      setLoggedIn(true);
+    }
+  }, [data]);
+  console.log('data', data);
   return (
     <div className="navbar px-3 bg-base-200">
       <div className="flex-1">
@@ -29,6 +32,30 @@ export default function Navbar() {
           </li>
         </ul>
         {loggedIn ? (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signOut();
+            }}
+            type="button"
+            className="btn btn-error btn-outline text-white font-[700] text-[1.2rem]"
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              signIn();
+            }}
+            type="button"
+            className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
+          >
+            Sign In
+          </button>
+        )}
+
+        {/* {loggedIn ? (
           <>
             <div className="form-control">
               <input
@@ -75,14 +102,15 @@ export default function Navbar() {
         ) : (
           <div className="flex items-center gap-5">
             <button
-              onClick={handleLogin}
+              // onClick={handleLogin}
+              onClick={() => signIn()}
               type="button"
               className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
             >
               Sign In
             </button>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
