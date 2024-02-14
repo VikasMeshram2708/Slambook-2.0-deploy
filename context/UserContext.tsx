@@ -2,14 +2,14 @@
 
 import { createContext } from 'react';
 
-type User = {
+export type UserInputType = {
   name?: String;
   email?: String;
   password?: String;
 
-  signup?: () => boolean;
-  signin?: () => boolean;
+  signUp?: (param: UserInputType) => void;
+  signIn?: (param: UserInputType) => void;
 };
-const UserContext = createContext<User | null>(null);
+const UserContext = createContext<UserInputType | null>(null);
 
 export default UserContext;
