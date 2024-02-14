@@ -10,6 +10,14 @@ import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri';
 import { useState } from 'react';
 
 const schema = z.object({
+  name: z
+    .string()
+    .min(2, {
+      message: 'Minimum length is 2 characters.',
+    })
+    .max(50, {
+      message: 'Maximum limit is 50 characters.',
+    }),
   email: z.string().email(),
   password: z
     .string()
@@ -23,7 +31,7 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>;
 
-export default function SignIn() {
+export default function SignUp() {
   const [toggleEye, setToggleEye] = useState(false);
   const {
     register,
@@ -48,12 +56,26 @@ export default function SignIn() {
   };
   return (
     <section className="min-h-screen font-Poppins">
-      <h1 className="text-3xl text-center font-bold mt-10">Sign In</h1>
-
+      <h1 className="text-3xl text-center font-bold mt-10">Sign Up</h1>
       <form
         onSubmit={handleSubmit(onSubmit as any)}
         className="max-w-lg rounded glass outline p-5 mt-10 mx-auto"
       >
+        <div className="grid gap-3 mb-5">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="name">Name</label>
+            <input
+              {...register('name')}
+              className="input input-bordered text-[1.2rem]"
+              type="text"
+              name="name"
+              placeholder="Enter name"
+            />
+            {errors?.name && (
+              <p className="text-red-500">{errors?.name?.message as string}</p>
+            )}
+          </div>
+        </div>
         <div className="grid gap-3 mb-5">
           <div className="flex flex-col gap-2">
             <label htmlFor="email">Email</label>
@@ -101,18 +123,19 @@ export default function SignIn() {
             type="submit"
             className="btn btn-lg btn-ghost w-full  mt-5 btn-outline text-[1.2rem]"
           >
-            {isSubmitting ? 'Loading...' : 'Sign In'}
+            {isSubmitting ? 'Loading...' : 'Sign Up'}
           </button>
         </div>
         {errors?.root && (
           <p className="text-red-500">{errors?.root?.message}</p>
         )}
+
         <p className="text-lg mt-5">
-          Not a User ?
+          Already a User ?
           {' '}
           <span>
-            <Link href="/pages/signup" className="font-[700]">
-              Sign Up
+            <Link href="/pages/signin" className="font-[700]">
+              Sign In
             </Link>
           </span>
         </p>
