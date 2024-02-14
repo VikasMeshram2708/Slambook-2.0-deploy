@@ -1,16 +1,23 @@
 'use client';
 
+import UserContext from '@/context/UserContext';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useContext, useEffect } from 'react';
 
 export default function Hero() {
+  const useContextData = useContext(UserContext);
   const router = useRouter();
-  const handleRedirect = (id:number) => {
+  const handleRedirect = (id: number) => {
     if (id === 1) {
       return router.push('/pages/explore');
     }
     return router.push('/pages/slams');
   };
+
+  useEffect(() => {
+    console.log('use-context', useContextData);
+  }, [useContextData]);
+
   return (
     <div className="items-center font-Poppins">
       <div className="flex items-center p-5 gap-10 max-w-[90%] justify-center mx-auto">
