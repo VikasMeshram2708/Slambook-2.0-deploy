@@ -5,6 +5,7 @@ import * as z from 'zod';
 import connectToDb from '@/lib/ConnectToDb';
 import jwt from 'jsonwebtoken';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { cookies } from 'next/headers';
 
 const prisma = new PrismaClient();
 
@@ -48,6 +49,11 @@ export async function POST(req: NextRequest) {
     // JWT Token Generation
     const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
       expiresIn: '1h',
+    });
+    cookies().set('smAuth', email, {
+      httpOnly: true,
+      secure: true,
+      path: '/',
     });
     return NextResponse.json(
       { success: true, message: 'User logged in successfully.', token },

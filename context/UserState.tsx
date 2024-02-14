@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import UserContext, { UserInputType } from './UserContext';
 
 const schema = z.object({
@@ -22,6 +24,7 @@ const schema = z.object({
     }),
 });
 export default function UserState({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [name, setName] = useState('vikas');
   const { setError, reset } = useForm({
     resolver: zodResolver(schema),
@@ -36,12 +39,17 @@ export default function UserState({ children }: { children: React.ReactNode }) {
         },
         body: JSON.stringify(param),
       });
+      reset();
       const result = await response.json();
       console.log('user-data-reponse', result);
       console.log(param);
-      reset();
+      if (!response.ok) {
+        return toast.error(result.message);
+      }
+      router.push('/pages/slams');
+      return toast.success(result.message);
     } catch (e) {
-      setError('root', {
+      return setError('root', {
         message: 'Something went wrong please try again later!',
       });
     }

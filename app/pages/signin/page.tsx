@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri';
 import { useContext, useState } from 'react';
 import UserContext from '@/context/UserContext';
+import { Toaster } from 'react-hot-toast';
 
 const schema = z.object({
   email: z.string().email(),
@@ -25,6 +26,7 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 export default function SignIn() {
+  // @ts-ignore
   const { signIn } = useContext(UserContext);
   const [toggleEye, setToggleEye] = useState(false);
   const {
@@ -120,6 +122,7 @@ export default function SignIn() {
           </span>
         </p>
       </form>
+      <Toaster />
     </section>
   );
 }
