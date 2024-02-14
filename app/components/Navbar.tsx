@@ -1,6 +1,11 @@
+import { cookies } from 'next/headers';
 import Link from 'next/link';
+import LogoutBtn from './LogoutBtn';
 
 export default function Navbar() {
+  const cookieStore = cookies();
+  const cookieValue = cookieStore.get('sbAuth')?.value;
+
   return (
     <div className="navbar px-3 bg-base-200">
       <div className="flex-1">
@@ -20,12 +25,16 @@ export default function Navbar() {
             <Link href="/pages/contact">Contact</Link>
           </li>
         </ul>
-        <button
-          type="button"
-          className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
-        >
-          <Link href="/pages/signin">Sign In</Link>
-        </button>
+        {cookieValue?.length ? (
+          <LogoutBtn />
+        ) : (
+          <button
+            type="button"
+            className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
+          >
+            <Link href="/pages/signin">Sign In</Link>
+          </button>
+        )}
 
         {/* {loggedIn ? (
           <>

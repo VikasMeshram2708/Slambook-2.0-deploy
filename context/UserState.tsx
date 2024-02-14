@@ -31,7 +31,6 @@ export default function UserState({ children }: { children: React.ReactNode }) {
   });
   const signIn = async (param: UserInputType) => {
     try {
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
       const response = await fetch('/api/signin', {
         method: 'POST',
         headers: {

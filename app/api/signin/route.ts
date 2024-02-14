@@ -50,11 +50,12 @@ export async function POST(req: NextRequest) {
     const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
       expiresIn: '1h',
     });
-    cookies().set('smAuth', email, {
+    cookies().set('sbAuth', token, {
       httpOnly: true,
       secure: true,
       path: '/',
     });
+    // NextResponse.redirect(new URL('/pages/signin'));
     return NextResponse.json(
       { success: true, message: 'User logged in successfully.', token },
       { status: 200 },
