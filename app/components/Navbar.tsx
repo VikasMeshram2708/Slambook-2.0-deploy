@@ -1,17 +1,6 @@
-'use client';
-
-import { signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
-export default function Navbar({ data }: any) {
-  const [loggedIn, setLoggedIn] = useState(false);
-  useEffect(() => {
-    if (data !== null) {
-      setLoggedIn(true);
-    }
-  }, [data]);
-  console.log('data', data);
+export default function Navbar() {
   return (
     <div className="navbar px-3 bg-base-200">
       <div className="flex-1">
@@ -31,29 +20,12 @@ export default function Navbar({ data }: any) {
             <Link href="/pages/contact">Contact</Link>
           </li>
         </ul>
-        {loggedIn ? (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              signOut();
-            }}
-            type="button"
-            className="btn btn-error btn-outline text-white font-[700] text-[1.2rem]"
-          >
-            Logout
-          </button>
-        ) : (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              signIn();
-            }}
-            type="button"
-            className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
-          >
-            Sign In
-          </button>
-        )}
+        <button
+          type="button"
+          className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
+        >
+          <Link href="/pages/signin">Sign In</Link>
+        </button>
 
         {/* {loggedIn ? (
           <>

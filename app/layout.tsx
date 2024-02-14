@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import React from 'react';
-import { getServerSession } from 'next-auth';
 import Navbar from './components/Navbar';
-import { authOptions } from './api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
   title: 'Slambook - Save Your Future Ambitions',
@@ -15,11 +13,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const data = await getServerSession(authOptions);
   return (
     <html lang="en" data-theme="primary">
       <body>
-        <Navbar data={data} />
+        <Navbar />
         {children}
       </body>
     </html>
