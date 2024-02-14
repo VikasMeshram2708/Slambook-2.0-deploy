@@ -2,9 +2,9 @@ import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import * as z from 'zod';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import connectToDb from '@/lib/ConnectToDb';
 import jwt from 'jsonwebtoken';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 const prisma = new PrismaClient();
 
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.error('Error during user signin:', error);
+    console.error('Error during user registration:', error);
     let errorMessage = 'An unknown error occurred.';
 
     if (error instanceof z.ZodError) {
