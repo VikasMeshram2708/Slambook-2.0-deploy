@@ -4,13 +4,13 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import UserContext, { UserInputType } from './UserContext';
+import UserContext, { SlamsInputType, UserInputType } from './UserContext';
 
 const schema = z.object({
   email: z.string().email(),
@@ -23,6 +23,7 @@ const schema = z.object({
       message: 'Maximum limit is 100 characters.',
     }),
 });
+
 export default function UserState({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [name, setName] = useState('vikas');
@@ -54,9 +55,28 @@ export default function UserState({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const storeSlams = (data: SlamsInputType) => {
+    try {
+      console.log('stored-slams', data);
+      return toast.success('Your slam was successfully stored.');
+    } catch (error) {
+      return setError('root', {
+        message: 'Something went wrong please try again later!',
+      });
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ name, signIn }}>
+    <UserContext.Provider value={{ name, signIn, storeSlams }}>
       {children}
     </UserContext.Provider>
   );
 }
+
+// export function useUserContext() {
+//   const context = useContext(UserContext);
+//   if (!context === undefined) {
+//     throw new Error('useUserContext must be used witht a UserStateProvider');
+//   }
+//   return context;
+// }

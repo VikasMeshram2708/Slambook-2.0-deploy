@@ -49,8 +49,8 @@ export const decodeCookie = (token: string) => {
   try {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET!);
     // @ts-ignore
-    const { email } = verifyToken;
-    return email;
+    const decodedData = verifyToken;
+    return decodedData;
   } catch (error) {
     return console.log(
       error instanceof Error

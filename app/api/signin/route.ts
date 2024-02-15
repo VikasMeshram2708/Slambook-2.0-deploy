@@ -47,7 +47,11 @@ export async function POST(req: NextRequest) {
     }
 
     // JWT Token Generation
-    const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
+    const tokenData = {
+      id: user.id,
+      email: user.email,
+    };
+    const token = jwt.sign({ tokenData }, process.env.JWT_SECRET!, {
       expiresIn: '1h',
     });
     cookies().set('sbAuth', token, {

@@ -42,7 +42,7 @@ export const POST = async (request: NextRequest) => {
     // sanitize the data
     // store into db
   } catch (error) {
-    console.error('Error during user registration:', error);
+    console.error('Error during slams storing:', error);
     let errorMessage = 'An unknown error occurred.';
 
     if (error instanceof z.ZodError) {

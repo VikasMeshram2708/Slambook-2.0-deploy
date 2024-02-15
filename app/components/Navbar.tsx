@@ -8,6 +8,8 @@ export default function Navbar() {
   const cookieValue = cookieStore.get('sbAuth')?.value;
   const decodedToken = decodeCookie(cookieValue as string);
   console.log('decoded', decodedToken);
+  // console.log('decoded', decodedToken?.tokenData?.id);
+  // const userId = decodedToken?.tokenData?.id;
 
   return (
     <div className="navbar px-3 bg-base-200">
