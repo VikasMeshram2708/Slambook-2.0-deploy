@@ -1,10 +1,13 @@
 import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { decodeCookie } from '@/middleware';
 import LogoutBtn from './LogoutBtn';
 
 export default function Navbar() {
   const cookieStore = cookies();
   const cookieValue = cookieStore.get('sbAuth')?.value;
+  const decodedToken = decodeCookie(cookieValue as string);
+  console.log('decoded', decodedToken);
 
   return (
     <div className="navbar px-3 bg-base-200">

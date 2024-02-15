@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 
 export function middleware(request: NextRequest) {
   try {
@@ -43,6 +44,21 @@ export function middleware(request: NextRequest) {
     });
   }
 }
+
+export const decodeCookie = (token: string) => {
+  try {
+    const verifyToken = jwt.verify(token, process.env.JWT_SECRET!);
+    // @ts-ignore
+    const { email } = verifyToken;
+    return email;
+  } catch (error) {
+    return console.log(
+      error instanceof Error
+        ? error?.message
+        : 'Failed to authenticate the user try again later.',
+    );
+  }
+};
 
 export const config = {
   // matcher: ['/pages/signin', '/pages/signup', '/pages/slams'],
