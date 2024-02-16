@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { setCookie } from 'nookies';
 import UserContext, { SlamsInputType, UserInputType } from './UserContext';
 
 const schema = z.object({
@@ -32,6 +33,7 @@ export default function UserState({ children }: { children: React.ReactNode }) {
   });
   const signIn = async (param: UserInputType) => {
     try {
+      console.log('signin-param', param);
       const response = await fetch('/api/signin', {
         method: 'POST',
         headers: {
@@ -46,6 +48,11 @@ export default function UserState({ children }: { children: React.ReactNode }) {
       if (!response.ok) {
         return toast.error(result.message);
       }
+
+      setCookie(null, 'sbAuth', JSON.stringify(result.responseData), {
+        maxAge: 30 * 60,
+        path: '/',
+      });
       router.push('/pages/slams');
       return toast.success(result.message);
     } catch (e) {

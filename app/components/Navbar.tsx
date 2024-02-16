@@ -1,16 +1,14 @@
-import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { decodeCookie } from '@/middleware';
+// import { useEffect } from 'react';
+// import nookies from 'nookies';
 import LogoutBtn from './LogoutBtn';
 
 export default function Navbar() {
-  const cookieStore = cookies();
-  const cookieValue = cookieStore.get('sbAuth')?.value;
-  const decodedToken = decodeCookie(cookieValue as string);
-  console.log('decoded', decodedToken);
-  // console.log('decoded', decodedToken?.tokenData?.id);
-  // const userId = decodedToken?.tokenData?.id;
-
+  // useEffect(() => {
+  //   const cookieData = nookies.get('sbAuth');
+  //   const parsedCookie = JSON.parse(cookieData.sbAuth);
+  //   console.log(parsedCookie[0].userId);
+  // }, []);
   return (
     <div className="navbar px-3 bg-base-200">
       <div className="flex-1">
@@ -30,16 +28,13 @@ export default function Navbar() {
             <Link href="/pages/contact">Contact</Link>
           </li>
         </ul>
-        {cookieValue?.length ? (
-          <LogoutBtn />
-        ) : (
-          <button
-            type="button"
-            className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
-          >
-            <Link href="/pages/signin">Sign In</Link>
-          </button>
-        )}
+        <LogoutBtn />
+        <button
+          type="button"
+          className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
+        >
+          <Link href="/pages/signin">Sign In</Link>
+        </button>
 
         {/* {loggedIn ? (
           <>

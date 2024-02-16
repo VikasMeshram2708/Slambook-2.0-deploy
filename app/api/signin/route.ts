@@ -5,7 +5,7 @@ import * as z from 'zod';
 import connectToDb from '@/lib/ConnectToDb';
 import jwt from 'jsonwebtoken';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { cookies } from 'next/headers';
+// import { cookies } from 'next/headers';
 
 const prisma = new PrismaClient();
 
@@ -54,14 +54,27 @@ export async function POST(req: NextRequest) {
     const token = jwt.sign({ tokenData }, process.env.JWT_SECRET!, {
       expiresIn: '1h',
     });
-    cookies().set('sbAuth', token, {
-      httpOnly: true,
-      secure: true,
-      path: '/',
-    });
+    const { id: userId, name: userFullName, email: userEmail } = user;
+    const responseData = [
+      {
+        token,
+        userId,
+        userFullName,
+        userEmail,
+      },
+    ];
+    // cookies().set('sbAuth', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   path: '/',
+    // });
     // NextResponse.redirect(new URL('/pages/signin'));
     return NextResponse.json(
-      { success: true, message: 'User logged in successfully.', token },
+      {
+        success: true,
+        message: 'User logged in successfully.',
+        responseData,
+      },
       { status: 200 },
     );
   } catch (error) {

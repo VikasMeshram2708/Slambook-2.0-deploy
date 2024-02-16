@@ -1,17 +1,22 @@
 'use client';
 
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, {
+  useState, ChangeEvent, FormEvent, useEffect,
+} from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import nookies from 'nookies';
 
 export default function page() {
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
+  const [User, setUser] = useState('');
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     try {
       event.preventDefault();
       const data = {
         title,
         message,
+        User,
       };
       const response = await fetch('http://localhost:3000/api/slams', {
         method: 'POST',
@@ -35,6 +40,14 @@ export default function page() {
       );
     }
   };
+
+  useEffect(() => {
+    // @ts-ignore
+    const cookieData = nookies.get('sbAuth');
+    const parsedCookie = JSON.parse(cookieData.sbAuth);
+    setUser(parsedCookie[0].userId);
+    console.log(parsedCookie[0].userId);
+  }, []);
   return (
     <section className="font-Poppins min-h-screen">
       <form onSubmit={handleSubmit} className="card-body max-w-5xl mx-auto">

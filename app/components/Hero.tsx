@@ -15,7 +15,7 @@ export default function Hero() {
   };
 
   useEffect(() => {
-    console.log('use-context', useContextData);
+    // console.log('use-context', useContextData);
   }, [useContextData]);
 
   return (
