@@ -57,7 +57,37 @@ export default function UserState({ children }: { children: React.ReactNode }) {
       return toast.success(result.message);
     } catch (e) {
       return setError('root', {
-        message: 'Something went wrong please try again later!',
+        message: 'User loggin in failed please try again later!',
+      });
+    }
+  };
+
+  const signUp = async (param: UserInputType) => {
+    try {
+      console.log('signin-param', param);
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(param),
+      });
+      reset();
+      const result = await response.json();
+      console.log('user-data-reponse', result);
+      console.log(param);
+      if (!response.ok) {
+        return toast.error(result.message);
+      }
+      toast.success(result.message);
+      return await new Promise(() => {
+        setTimeout(() => {
+          router.push('/pages/signin');
+        }, 3000);
+      });
+    } catch (e) {
+      return setError('root', {
+        message: 'User Registration failed please try again later.',
       });
     }
   };
@@ -74,7 +104,14 @@ export default function UserState({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ name, signIn, storeSlams }}>
+    <UserContext.Provider
+      value={{
+        name,
+        signIn,
+        storeSlams,
+        signUp,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

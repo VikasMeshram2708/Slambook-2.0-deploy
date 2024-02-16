@@ -7,7 +7,9 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import UserContext from '@/context/UserContext';
+import { Toaster } from 'react-hot-toast';
 
 const schema = z.object({
   name: z
@@ -33,27 +35,30 @@ type FormFields = z.infer<typeof schema>;
 
 export default function SignUp() {
   const [toggleEye, setToggleEye] = useState(false);
+  // @ts-ignore
+  const { signUp } = useContext(UserContext);
   const {
     register,
     handleSubmit,
-    setError,
-    reset,
+    // setError,
+    // reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(data);
-      reset();
-    } catch (e) {
-      setError('root', {
-        message: 'Something went wrong please try again later!',
-      });
-    }
-  };
+  const onSubmit: SubmitHandler<FormFields> = async (data) => signUp(data);
+  // const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  //   try {
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     console.log(data);
+  //     reset();
+  //   } catch (e) {
+  //     setError('root', {
+  //       message: 'Something went wrong please try again later!',
+  //     });
+  //   }
+  // };
   return (
     <section className="min-h-screen font-Poppins">
       <h1 className="text-3xl text-center font-bold mt-10">Sign Up</h1>
@@ -140,6 +145,7 @@ export default function SignUp() {
           </span>
         </p>
       </form>
+      <Toaster />
     </section>
   );
 }
