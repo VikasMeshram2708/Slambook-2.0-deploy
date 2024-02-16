@@ -1,14 +1,31 @@
+'use client';
+
 import Link from 'next/link';
 // import { useEffect } from 'react';
 // import nookies from 'nookies';
+import { useEffect, useState } from 'react';
 import LogoutBtn from './LogoutBtn';
 
 export default function Navbar() {
-  // useEffect(() => {
-  //   const cookieData = nookies.get('sbAuth');
-  //   const parsedCookie = JSON.parse(cookieData.sbAuth);
-  //   console.log(parsedCookie[0].userId);
-  // }, []);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkForToken = () => {
+      try {
+        const cookies = document.cookie;
+        if (!cookies) {
+          return console.log('not logged in');
+        }
+        return new Promise(() => {
+          setLoggedIn(true);
+        });
+      } catch (error) {
+        return new Error('Cookie not found.');
+      }
+    };
+    checkForToken();
+  }, []);
+
   return (
     <div className="navbar px-3 bg-base-200">
       <div className="flex-1">
@@ -28,13 +45,16 @@ export default function Navbar() {
             <Link href="/pages/contact">Contact</Link>
           </li>
         </ul>
-        <LogoutBtn />
-        <button
-          type="button"
-          className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
-        >
-          <Link href="/pages/signin">Sign In</Link>
-        </button>
+        {loggedIn ? (
+          <LogoutBtn />
+        ) : (
+          <button
+            type="button"
+            className="btn btn-info btn-outline text-white font-[700] text-[1.2rem]"
+          >
+            <Link href="/pages/signin">Sign In</Link>
+          </button>
+        )}
 
         {/* {loggedIn ? (
           <>

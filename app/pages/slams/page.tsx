@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import nookies from 'nookies';
+import Slams from '@/app/components/Slams';
 
 export default function page() {
   const [title, setTitle] = useState('');
@@ -46,7 +47,6 @@ export default function page() {
     const cookieData = nookies.get('sbAuth');
     const parsedCookie = JSON.parse(cookieData.sbAuth);
     setUser(parsedCookie[0].userId);
-    console.log(parsedCookie[0].userId);
   }, []);
   return (
     <section className="font-Poppins min-h-screen">
@@ -81,6 +81,9 @@ export default function page() {
           </button>
         </div>
       </form>
+      <div className="max-w-[80%] mx-auto">
+        <Slams />
+      </div>
       <Toaster />
     </section>
   );
