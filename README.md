@@ -10,7 +10,7 @@
 
 * npm run dev
 
-### Features
+### Future Features
 
 * 0Auth
 
@@ -18,8 +18,27 @@
 
 ### Why This Project is Best
 
-* Because it follows best practices using TypeScript which is a facilitate us with the type safety, and the best naming convention , Camel Casing on file names.
+* Because it follows best practices using TypeScript which is a facilitate us with the type safety, and the best naming convention , Camel Casing on each files.
 
-* 0Auth, Testing of Components, Top linting rules, Docker for containerization. 
+* Testing of Components, Top linting rules, Docker for containerization. 
 
 * Using form React Hook Form library for form validations. 
+
+
+### Finished
+
+* Website layout
+
+* Authentication
+
+* Form Validations
+
+* Important Pages like (contact us, about us, etc).
+
+### Pending 
+
+* Conditional Rendering for Logout Button.
+
+* Persoanl Slams API integration on client's page.
+
+* CRUD OPERATIONS on Slams(user created).
