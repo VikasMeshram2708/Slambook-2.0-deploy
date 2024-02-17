@@ -4,14 +4,15 @@
 
 'use client';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'nookies';
-import UserContext, { SlamsInputType, UserInputType } from './UserContext';
+import UserContext, { InitialSlamsType, SlamsInputType, UserInputType } from './UserContext';
+import { sampleSlams } from './SampleSlam';
 
 const schema = z.object({
   email: z.string().email(),
@@ -27,6 +28,7 @@ const schema = z.object({
 
 export default function UserState({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const [initialSlams, setInitialSlams] = useState<InitialSlamsType[]>(sampleSlams);
   const [name, setName] = useState('vikas');
   const { setError, reset } = useForm({
     resolver: zodResolver(schema),
@@ -92,6 +94,15 @@ export default function UserState({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const handleDelete = (slamId: number) => {
+    console.log('deleted-slam', slamId);
+    const deletables = initialSlams?.filter((item) => item?.id === slamId);
+    console.log('deletabled-slam', deletables);
+    const filteredItems = initialSlams.filter((item) => item.id !== slamId);
+    setInitialSlams(filteredItems);
+    return filteredItems;
+  };
+
   const storeSlams = (data: SlamsInputType) => {
     try {
       console.log('stored-slams', data);
@@ -110,6 +121,8 @@ export default function UserState({ children }: { children: React.ReactNode }) {
         signIn,
         storeSlams,
         signUp,
+        handleDelete,
+        initialSlams,
       }}
     >
       {children}

@@ -1,13 +1,20 @@
 'use client';
 
 import React, {
-  useState, ChangeEvent, FormEvent, useEffect,
+  useState, ChangeEvent, FormEvent, useEffect, useContext,
 } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import nookies from 'nookies';
 import Slams from '@/app/components/Slams';
+import UserContext from '@/context/UserContext';
+// import { initialSlams } from '@/context/SampleSlam';
 
 export default function page() {
+  // @ts-ignore
+  const { initialSlams } = useContext(UserContext);
+  useEffect(() => {
+    console.log('init', initialSlams);
+  }, [initialSlams]);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [User, setUser] = useState('');
@@ -82,7 +89,7 @@ export default function page() {
         </div>
       </form>
       <div className="max-w-[80%] mx-auto">
-        <Slams />
+        <Slams initialSlams={initialSlams} />
       </div>
       <Toaster />
     </section>

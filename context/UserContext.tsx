@@ -9,6 +9,12 @@ export type SlamsInputType = {
   User: number;
 };
 
+export type InitialSlamsType = {
+  id: number;
+  title: string;
+  description: string;
+};
+
 export type UserInputType = {
   name?: String;
   email?: String;
@@ -17,6 +23,8 @@ export type UserInputType = {
   signUp?: (param: UserInputType) => void;
   signIn?: (param: UserInputType) => void;
   storeSlams?: (param: SlamsInputType) => void;
+  handleDelete?: (param: any) => void;
+  initialSlams?: InitialSlamsType[];
 };
 const UserContext = createContext<UserInputType | null>(null);
 
